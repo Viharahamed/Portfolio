@@ -1,12 +1,18 @@
 fs = require("fs");
 const https = require("https");
 process = require("process");
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME;
-const USE_GITHUB_DATA = process.env.USE_GITHUB_DATA;
-const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME;
+console.log("Token exists ", !!GITHUB_TOKEN);
+if (!GITHUB_TOKEN) {
+  console.error("Error: Github token not found  in .env file");
+  process.exit(1);
+}
+const GITHUB_USERNAME = "Viharahamed";
+const USE_GITHUB_DATA = process.env.USE_GITHUB_DATA && process.env.USE_GITHUB_DATA.trim();
+const MEDIUM_USERNAME = "";
 
 const ERR = {
   noUserName:
@@ -62,7 +68,7 @@ if (USE_GITHUB_DATA === "true") {
     port: 443,
     method: "POST",
     headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Authorization: `token ${GITHUB_TOKEN}`,
       "User-Agent": "Node"
     }
   };
@@ -94,7 +100,7 @@ if (USE_GITHUB_DATA === "true") {
   req.end();
 }
 
-if (MEDIUM_USERNAME !== undefined) {
+if (MEDIUM_USERNAME && MEDIUM_USERNAME.trim() !== "") {
   console.log(`Fetching Medium blogs data for ${MEDIUM_USERNAME}`);
   const options = {
     hostname: "api.rss2json.com",

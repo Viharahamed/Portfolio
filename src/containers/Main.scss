@@ -5,3 +5,22 @@
   color: white;
   transition: "0.1s";
 }
+
+.achievement-contact-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .achievement-contact-container {
+    flex-direction: column;
+  }
+}
+
+.achievement-contact-container > * {
+  flex: 1;
+}
